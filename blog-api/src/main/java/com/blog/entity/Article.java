@@ -12,27 +12,14 @@ public class Article {
     private String summary;
     private int commentCounts;
     private int viewCounts;
-    /**
-     * 作者id
-     */
+    //作者id
     private Long authorId;
-    /**
-     * 内容id
-     */
+    //内容id
     private Long bodyId;
-    /**
-     *类别id
-     */
+    //类别id
     private Long categoryId;
-
-    /**
-     * 置顶
-     */
+    //指定信息
     private int weight = Article_Common;
-
-
-    /**
-     * 创建时间
-     */
+    //创建时间
     private Long createDate;
 }
