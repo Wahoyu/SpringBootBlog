@@ -11,7 +11,9 @@ public interface TagMapper extends BaseMapper<Tag> {
     //根据文章id查询标签列表
     List<Tag> findTagsByArticleId(Long atricleId);
 
+    //查询到热门的标签的id
     List<Long> findHotsTagIds(int limit);
 
+    //将热门标签的id转化为标签名字
     List<Tag> findTagsByIds(List<Long> tagIds);
 }

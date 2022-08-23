@@ -12,6 +12,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    //通过用户id查询用户名字
     @Override
     public SysUser findUserById(Long id) {
         SysUser sysUser = sysUserMapper.selectById(id);

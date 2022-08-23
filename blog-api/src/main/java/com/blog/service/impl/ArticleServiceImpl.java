@@ -73,7 +73,7 @@ public class ArticleServiceImpl implements ArticleService {
             articleVo.setTags(tagService.findTagsByArticleId(articleId));
         }
 
-        //
+        //如果文章有对应作者，则显示
         if (isAuthor){
             Long authorId = article.getAuthorId();
             articleVo.setAuthor(sysUserService.findUserById(authorId).getNickname());

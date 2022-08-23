@@ -22,6 +22,7 @@ public class TagServiceImpl implements TagService {
     private TagMapper tagMapper;
 
     //MyabtisPlus 无法进行多表查询(可以通过JPA进行指令进行查询)
+    //通过文章id查询到标签列表
     @Override
     public List<TagVo> findTagsByArticleId(Long id) {
         List<Tag> tags = tagMapper.findTagsByArticleId(id);
@@ -44,7 +45,7 @@ public class TagServiceImpl implements TagService {
         return tagVo;
     }
 
-    //最热标签
+    //显示最热标签
     @Override
     public Result hots(int limit) {
 

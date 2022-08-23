@@ -17,6 +17,7 @@ public class ArticleController {
     @PostMapping
     public Result listArticle(@RequestBody PageParams pageParams){
 
+        //返回主页文章列表
         return articleService.listArticle(pageParams);
     }
 }

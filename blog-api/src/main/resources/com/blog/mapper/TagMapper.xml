@@ -4,6 +4,7 @@
 
 <mapper namespace="com.blog.mapper.TagMapper">
 
+    <!--根据文章id查询标签列表-->
     <select id="findTagsByArticleId" parameterType="long" resultType="com.blog.entity.Tag">
         select id,avatar,tag_name as tagName from ms_tag
         where id in
@@ -18,7 +19,7 @@
         LIMIT #{limit}
     </select>
 
-    <!--将tagids转化成tagList-->
+    <!--在tag表中，通过tagIds转化成taglist-->
     <select id="findTagsByIds" parameterType="list" resultType="com.blog.entity.Tag">
         select id , tag_name as tagName from ms_tag
         where id in

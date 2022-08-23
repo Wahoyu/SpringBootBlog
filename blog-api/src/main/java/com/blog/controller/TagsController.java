@@ -14,6 +14,7 @@ public class TagsController {
     @Autowired
     TagService tagService;
 
+    //显示6个最热tags
     @GetMapping("hot")
     public Result hot(){
         int limit = 6;
