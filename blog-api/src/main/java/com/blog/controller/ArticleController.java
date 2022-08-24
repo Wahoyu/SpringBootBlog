@@ -20,4 +20,21 @@ public class ArticleController {
         //返回主页文章列表
         return articleService.listArticle(pageParams);
     }
+
+    //首页显示最热文章
+    @PostMapping("hot")
+    public Result hotArticle(){
+
+        int limit = 5;
+        //返回主页文章列表
+        return articleService.hotArticle(limit);
+    }
+    //首页显示最新文章
+    @PostMapping("new")
+    public Result newArticle(){
+
+        int limit = 5;
+        //返回主页文章列表
+        return articleService.newArticle(limit);
+    }
 }

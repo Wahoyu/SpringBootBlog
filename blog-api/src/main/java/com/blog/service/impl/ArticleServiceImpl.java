@@ -80,4 +80,38 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articleVo;
     }
+
+    //首页显示最热文章
+    @Override
+    public Result hotArticle(int limit) {
+        //创建条件构造器wrapper对象
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        //通过文章的观看次数进行降序排序
+        queryWrapper.orderByDesc(Article::getViewCounts);
+        //限制查询id和title
+        queryWrapper.select(Article::getId,Article::getTitle);
+        //查询语句的结尾
+        queryWrapper.last("limit "+limit);
+        //sql: select id ,title from article order by view_counts desc limit 5
+
+        List<Article> articles = articleMapper.selectList(queryWrapper);
+        return Result.success(copyList(articles,false,false));
+    }
+
+    //首页显示最新文章
+    @Override
+    public Result newArticle(int limit) {
+        //创建Wrapper对象
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        //通过文章的观看次数进行降序排序
+        queryWrapper.orderByDesc(Article::getCreateDate);
+        //限制查询id和title
+        queryWrapper.select(Article::getId,Article::getTitle);
+        //查询语句的结尾
+        queryWrapper.last("limit "+limit);
+        //sql: select id ,title from article order by view_counts desc limit 5
+
+        List<Article> articles = articleMapper.selectList(queryWrapper);
+        return Result.success(copyList(articles,false,false));
+    }
 }
