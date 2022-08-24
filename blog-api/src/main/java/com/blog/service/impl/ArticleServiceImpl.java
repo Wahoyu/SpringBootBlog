@@ -2,6 +2,7 @@ package com.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.blog.dos.Archives;
 import com.blog.entity.Article;
 import com.blog.mapper.ArticleMapper;
 import com.blog.service.ArticleService;
@@ -113,5 +114,12 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<Article> articles = articleMapper.selectList(queryWrapper);
         return Result.success(copyList(articles,false,false));
+    }
+
+    //首页显示文章归档
+    @Override
+    public Result listArchives() {
+        List<Archives> archivesList = articleMapper.listArchives();
+        return Result.success(archivesList);
     }
 }

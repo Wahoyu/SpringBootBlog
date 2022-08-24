@@ -13,4 +13,7 @@ public interface ArticleService {
 
     //首页显示最新文章
     Result newArticle(int limit);
+
+    //首页显示文章归档
+    Result listArchives();
 }

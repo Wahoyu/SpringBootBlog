@@ -29,6 +29,7 @@ public class ArticleController {
         //返回主页文章列表
         return articleService.hotArticle(limit);
     }
+
     //首页显示最新文章
     @PostMapping("new")
     public Result newArticle(){
@@ -36,5 +37,11 @@ public class ArticleController {
         int limit = 5;
         //返回主页文章列表
         return articleService.newArticle(limit);
+    }
+
+    //显示首页文章归档
+    @PostMapping("listArchives")
+    public Result listArchives(){
+        return articleService.listArchives();
     }
 }
