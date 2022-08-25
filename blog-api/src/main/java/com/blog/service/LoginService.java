@@ -7,4 +7,9 @@ public interface LoginService {
 
     //登陆验证
     Result login(LoginParams loginParams);
+
+    //退出登陆
+    Result logout(String token);
+
+
 }

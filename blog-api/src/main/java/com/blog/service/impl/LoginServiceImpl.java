@@ -60,6 +60,15 @@ public class LoginServiceImpl implements LoginService {
 
         //将token信息return给前端
         return Result.success(token);
-
     }
+
+    //退出登陆
+    @Override
+    public Result logout(String token) {
+        //从Redis中将Token的信息进行删除
+        redisTemplate.delete("TOKEN_"+token);
+        return Result.success(null);
+    }
+
+
 }
