@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LeetcodeEditor">
+    <option name="projectConfig">
+      <map>
+        <entry key="D:/Leetcode/leetcode/editor/cn/[13]罗马数字转整数.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="D:/Leetcode/leetcode/editor/cn/doc/content/[13]罗马数字转整数.md" />
+              <option name="frontendQuestionId" value="leetcode.cn13" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="D:/Leetcode/leetcode/editor/cn/[13]罗马数字转整数.java" />
+              <option name="titleSlug" value="roman-to-integer" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="D:/Leetcode/leetcode/editor/cn/[1460]通过翻转子数组使两个数组相等.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="D:/Leetcode/leetcode/editor/cn/doc/content/[1460]通过翻转子数组使两个数组相等.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1460" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="D:/Leetcode/leetcode/editor/cn/[1460]通过翻转子数组使两个数组相等.java" />
+              <option name="titleSlug" value="make-two-arrays-equal-by-reversing-sub-arrays" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="D:/Leetcode/leetcode/editor/cn/[9]回文数.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="D:/Leetcode/leetcode/editor/cn/doc/content/[9]回文数.md" />
+              <option name="frontendQuestionId" value="leetcode.cn9" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="D:/Leetcode/leetcode/editor/cn/[9]回文数.java" />
+              <option name="titleSlug" value="palindrome-number" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="D:/Leetcode/leetcode/editor/cn/[LCP 30]魔塔游戏.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="D:/Leetcode/leetcode/editor/cn/doc/content/[LCP 30]魔塔游戏.md" />
+              <option name="frontendQuestionId" value="leetcode.cnLCP 30" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="D:/Leetcode/leetcode/editor/cn/[LCP 30]魔塔游戏.java" />
+              <option name="titleSlug" value="p0NxJO" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

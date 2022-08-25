@@ -1,9 +1,16 @@
 package com.blog.service;
 
 import com.blog.entity.SysUser;
+import com.blog.vo.Result;
 
 public interface SysUserService {
 
     //通过用户id查询用户名字
     SysUser findUserById(Long id);
+
+    //通过用户名和密码查询用户
+    SysUser findUser(String account, String password);
+
+    //从Token中获取用户信息
+    Result getUserInfoByToken(String token);
 }

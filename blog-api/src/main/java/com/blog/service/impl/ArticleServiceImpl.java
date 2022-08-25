@@ -37,14 +37,11 @@ public class ArticleServiceImpl implements ArticleService {
         //创建查询用的Wrapper对象，并对wrapper对象进行限制
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Article::getCreateDate,Article::getWeight);
-
         //通过当前页数，页表大小，查询条件 -> 文章页
         Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
 
-        //文章页 -> 原生文章列表
+        //文章页 -> 原生文章列表 -> 精修后文章列表
         List<Article> records = articlePage.getRecords();
-
-        // 原生文章列表 -> 精修后文章列表
         List<ArticleVo> articleVoList = copyList(records,true,true);
 
         //将精修的文章列表进行返回

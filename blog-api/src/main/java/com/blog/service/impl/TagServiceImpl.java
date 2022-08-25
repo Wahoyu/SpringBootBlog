@@ -28,7 +28,6 @@ public class TagServiceImpl implements TagService {
         List<Tag> tags = tagMapper.findTagsByArticleId(id);
         return copyList(tags);
     }
-
     //将Tag列表转化成articleVo可以识别的tagList
     public List<TagVo> copyList(List<Tag> tagList){
         List<TagVo> tagVoList = new ArrayList<>();
@@ -37,7 +36,6 @@ public class TagServiceImpl implements TagService {
         }
         return tagVoList;
     }
-
     //将tag列表中的每一个Tag进行格式转换
     public TagVo copy(Tag tag){
         TagVo tagVo = new TagVo();

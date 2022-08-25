@@ -42,6 +42,13 @@
             </exclusions>
         </dependency>
 
+        <!--JWT登陆实现技术-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
         <!-- 导入我们要用的日志门面log4j2 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -52,6 +59,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!--MD5加密依赖-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
 
         <!--导入mail依赖-->
