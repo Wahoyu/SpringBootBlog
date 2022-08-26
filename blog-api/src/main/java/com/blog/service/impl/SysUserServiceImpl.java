@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.blog.entity.SysUser;
 import com.blog.mapper.SysUserMapper;
+import com.blog.service.LoginService;
 import com.blog.service.SysUserService;
 import com.blog.utils.JWTUtils;
 import com.blog.vo.ErrorCode;
@@ -21,6 +22,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private LoginService loginService;
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
@@ -52,21 +55,11 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public Result getUserInfoByToken(String token) {
 
-        //1.通过JWT对token进行合法性校验，不合格则报错
-        Map<String, Object> map = JWTUtils.checkToken(token);
-        if (map == null){
-            return Result.fail(ErrorCode.NO_LOGIN.getCode(),ErrorCode.NO_LOGIN.getMsg());
+        //检查token并生成sysUser
+        SysUser sysUser = loginService.checkToken(token);
+        if (sysUser == null){
+            Result.fail(ErrorCode.TOKEN_ERROR.getCode(),ErrorCode.TOKEN_ERROR.getMsg());
         }
-
-        //我们当初进行Redis存储时，key是token，value是JSON.toJSONString(sysUser)
-        //通过JWT格式检查之后，在Redis中进行查出token对应的sysuser的json值，没有则报错
-        String userJson = redisTemplate.opsForValue().get("TOKEN_" + token);
-        if (StringUtils.isBlank(userJson)){
-            return Result.fail(ErrorCode.NO_LOGIN.getCode(),ErrorCode.NO_LOGIN.getMsg());
-        }
-
-        //通过json解析器，将userJson信息转化成SysUser格式的对象
-        SysUser sysUser = JSON.parseObject(userJson, SysUser.class);
 
         //创建一个适配前端的 用户信息 对象loginUserVo
         LoginUserVo loginUserVo = new LoginUserVo();

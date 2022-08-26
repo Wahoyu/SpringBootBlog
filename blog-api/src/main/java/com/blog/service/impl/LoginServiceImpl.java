@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -60,6 +61,33 @@ public class LoginServiceImpl implements LoginService {
 
         //将token信息return给前端
         return Result.success(token);
+    }
+
+    //获取用户信息和设置拦截器的时候checkToken
+    //通过Token获取用户信息
+    @Override
+    public SysUser checkToken(String token) {
+
+        //判断token是否为空值
+        if (StringUtils.isBlank(token)){
+            return null;
+        }
+        //1.通过JWT对token进行合法性校验，不合格则报错
+        Map<String, Object> map = JWTUtils.checkToken(token);
+        if (map == null){
+            return null;
+        }
+
+        //我们当初进行Redis存储时，key是token，value是JSON.toJSONString(sysUser)
+        //通过JWT格式检查之后，在Redis中进行查出token对应的sysuser的json值，没有则报错
+        String userJson = redisTemplate.opsForValue().get("TOKEN_" + token);
+        if (StringUtils.isBlank(userJson)){
+            return null;
+        }
+
+        //通过json解析器，将userJson信息转化成SysUser格式的对象
+        SysUser sysUser = JSON.parseObject(userJson, SysUser.class);
+        return sysUser;
     }
 
     //退出登陆
