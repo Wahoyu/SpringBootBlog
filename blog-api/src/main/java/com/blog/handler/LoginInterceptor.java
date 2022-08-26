@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.blog.entity.SysUser;
 import com.blog.service.LoginService;
+import com.blog.utils.UserThreadLocal;
 import com.blog.vo.ErrorCode;
 import com.blog.vo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +68,14 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        //登陆验证成功，放行
+        //登录验证成功，放行
+        //我希望在controller中 直接获取用户的信息 怎么获取?
+        UserThreadLocal.put(sysUser);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        UserThreadLocal.remove();
     }
 }
