@@ -80,4 +80,25 @@ public class SysUserServiceImpl implements SysUserService {
         return Result.success(loginUserVo);
     }
 
+    //注册时根据账户查找用户
+    @Override
+    public SysUser findUserByAccount(String account) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+
+        //注意：此处的查询wrapper仔细考虑。我们使用SysUserh类中的getAccount方法，让他等于我们前端传入的account数值进行查询
+        queryWrapper.eq(SysUser::getAccount,account);
+        queryWrapper.last("limit 1");
+        return this.sysUserMapper.selectOne(queryWrapper);
+    }
+
+    //注册时保存用户
+    @Override
+    public void save(SysUser sysUser) {
+
+        //id会自动生成
+        //这个地方默认生成的id时分布式id，采用的是雪花算法
+        //在此处我们就不对用户id进行配置了（在SysUser的id上添加注解）-> @TableIdId(type = IdType.AUTO)
+        //以后 用户多了之后 要进行分表操作 id就需要使用分布式id
+        this.sysUserMapper.insert(sysUser);
+    }
 }

@@ -44,7 +44,7 @@ public class LoginServiceImpl implements LoginService {
         //对密码进行md5加密   (需要导入依赖)(注意是commons-codec类)
         password = DigestUtils.md5Hex(password + salt);
 
-        //去uesr表中查询加密后的用户名和密码是否存在
+        //去user表中查询加密后的用户名和密码是否存在
         SysUser sysUser = sysUserService.findUser(account,password);
 
         //判断表中是否存在用户名
@@ -70,5 +70,58 @@ public class LoginServiceImpl implements LoginService {
         return Result.success(null);
     }
 
+    //注册
+    @Override
+    public Result register(LoginParams loginParams) {
+        /**
+         * 1. 判断参数是否合法
+         * 2. 判断账户是否已经存在（返回账户已经被注册）
+         * 3. 注册用户
+         * 4. 生成token
+         * 5. 存入redis并返回
+         * 6. 注意加上事务 一旦中间出现任何问题 需要回滚
+         */
 
+        //从前端参数中获取数据
+        String account = loginParams.getAccount();
+        String password = loginParams.getPassword();
+        String nickname = loginParams.getNickname();
+
+        //判断参数是否合法，不合法则报出异常
+        if (StringUtils.isBlank(account) || StringUtils.isBlank(password) || StringUtils.isBlank(nickname)){
+            return Result.fail(ErrorCode.PARAMS_ERROR.getCode(),ErrorCode.PARAMS_ERROR.getMsg());
+        }
+
+        //如果数据库中有这个用户，则报出用户已存在异常
+        SysUser sysUser = this.sysUserService.findUserByAccount(account);
+        if (sysUser != null){
+            return Result.fail(ErrorCode.ACCOUNT_EXIST.getCode(),ErrorCode.ACCOUNT_EXIST.getMsg());
+        }
+
+        //新建用户对象并填入信息(信息可以是前端参数传送过来的，可以是自己定义的)
+        sysUser = new SysUser();
+        sysUser.setNickname(nickname);
+        sysUser.setAccount(account);
+        sysUser.setPassword(DigestUtils.md5Hex(password+salt));
+        sysUser.setCreateDate(System.currentTimeMillis());
+        sysUser.setLastLogin(System.currentTimeMillis());
+        sysUser.setAvatar("/static/img/logo.b3a48c0.png");
+        sysUser.setAdmin(1); //1 为true
+        sysUser.setDeleted(0); // 0 为false
+        sysUser.setSalt("");
+        sysUser.setStatus("");
+        sysUser.setEmail("");
+
+        //将新建用户信息保存到数据库中
+        this.sysUserService.save(sysUser);
+
+        //通过JWT创建一个token
+        String token = JWTUtils.createToken(sysUser.getId());
+
+        //将token存入redis
+        redisTemplate.opsForValue().set("TOKEN_"+token, JSON.toJSONString(sysUser),1, TimeUnit.DAYS);
+
+        //给前端赋予token
+        return Result.success(token);
+    }
 }

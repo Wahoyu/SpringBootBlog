@@ -13,4 +13,10 @@ public interface SysUserService {
 
     //从Token中获取用户信息
     Result getUserInfoByToken(String token);
+
+    //注册时判断用户是否存在
+    SysUser findUserByAccount(String account);
+
+    //注册时保存用户
+    void save(SysUser sysUser);
 }
