@@ -6,6 +6,7 @@ import com.blog.entity.SysUser;
 import com.blog.service.LoginService;
 import com.blog.vo.ErrorCode;
 import com.blog.vo.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -35,8 +37,18 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        //判断token是否为空
+        //获取token
         String token = request.getHeader("Authorization");
+
+        //日志信息
+        log.info("=================request start===========================");
+        String requestURI = request.getRequestURI();
+        log.info("request uri:{}",requestURI);
+        log.info("request method:{}",request.getMethod());
+        log.info("token:{}", token);
+        log.info("=================request end===========================");
+
+        //判断token是否为空
         if (StringUtils.isBlank(token)){
             //返回json格式的错误信息
             Result result = Result.fail(ErrorCode.NO_LOGIN.getCode(),"未登录");
