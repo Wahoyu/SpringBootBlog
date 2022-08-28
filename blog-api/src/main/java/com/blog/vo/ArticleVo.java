@@ -19,8 +19,10 @@ public class ArticleVo {
     //创建时间
     private String createDate;
     private String author;
-//    private ArticleBodyVo body;
+    //文章详细内容
+    private ArticleBodyVo body;
     private List<TagVo> tags;
-//    private List<CategoryVo> categorys;
+    //文章分类
+    private CategoryVo category;
 
 }

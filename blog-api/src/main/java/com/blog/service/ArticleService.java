@@ -16,4 +16,7 @@ public interface ArticleService {
 
     //首页显示文章归档
     Result listArchives();
+
+    //显示文章详细信息
+    Result findArticleById(Long articleId);
 }

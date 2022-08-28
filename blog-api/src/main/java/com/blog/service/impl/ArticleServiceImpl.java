@@ -4,12 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.dos.Archives;
 import com.blog.entity.Article;
+import com.blog.entity.ArticleBody;
+import com.blog.mapper.ArticleBodyMapper;
 import com.blog.mapper.ArticleMapper;
 import com.blog.service.ArticleService;
+import com.blog.service.CategoryService;
 import com.blog.service.TagService;
+import com.blog.vo.ArticleBodyVo;
 import com.blog.vo.ArticleVo;
 import com.blog.vo.Result;
 import com.blog.vo.params.PageParams;
+import com.sun.org.apache.xpath.internal.objects.XBoolean;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     SysUserServiceImpl sysUserService;
 
+    //获取主页文章列表
     @Override
     public Result listArticle(PageParams pageParams) {
 
@@ -79,6 +85,52 @@ public class ArticleServiceImpl implements ArticleService {
         return articleVo;
     }
 
+    //这是针对文章详细内容的ArticleVo-copy方法，为文章列表的copy方法之重载版本
+    @Autowired
+    CategoryService categoryService;
+    private ArticleVo copy (Article article , boolean isTag , boolean isAuthor,boolean isBody ,boolean isCategory){
+        ArticleVo articleVo = new ArticleVo();
+        BeanUtils.copyProperties(article,articleVo);
+        //单独设置时间
+        articleVo.setCreateDate(new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:MM"));
+
+        //判断是否有tag进行输出，如果有tag，向article-tag表格中获取articleid，获取tags列表放到articleVo实体类对象中
+        if (isTag) {
+            Long articleId = article.getId();
+            articleVo.setTags(tagService.findTagsByArticleId(articleId));
+        }
+
+        //如果文章有对应作者，则显示
+        if (isAuthor){
+            Long authorId = article.getAuthorId();
+            articleVo.setAuthor(sysUserService.findUserById(authorId).getNickname());
+        }
+
+        //如果需要body信息，要进行查询
+        if (isBody){
+            Long bodyid = article.getId();
+            articleVo.setBody(findArticleByBodyId(bodyid));
+        }
+
+        //如果需要category信息，要进行查询
+        if (isCategory){
+            Long categoryId = article.getCategoryId();
+            articleVo.setCategory(categoryService.findCategoryById(categoryId));
+        }
+
+        return articleVo;
+    }
+
+    //查询文章详细信息（文章内容）
+    @Autowired
+    private ArticleBodyMapper articleBodyMapper;
+    private ArticleBodyVo findArticleByBodyId(Long bodyId) {
+        ArticleBody articleBody = articleBodyMapper.selectById(bodyId);
+        ArticleBodyVo articleBodyVo = new ArticleBodyVo();
+        articleBodyVo.setContent(articleBody.getContent());
+        return articleBodyVo;
+    }
+
     //首页显示最热文章
     @Override
     public Result hotArticle(int limit) {
@@ -118,5 +170,19 @@ public class ArticleServiceImpl implements ArticleService {
     public Result listArchives() {
         List<Archives> archivesList = articleMapper.listArchives();
         return Result.success(archivesList);
+    }
+
+    //显示文章详细信息（内容加标签分类等全部）
+    @Override
+    public Result findArticleById(Long articleId) {
+
+        //先通过id创造出一个包含简单信息的article对象
+        Article article = this.articleMapper.selectById(articleId);
+
+        //将简单article 转化为 简单articleVo
+        ArticleVo articleVo = copy(article,true,true,true,true);
+
+        //将简单Vo进行返回
+        return Result.success(articleVo);
     }
 }
