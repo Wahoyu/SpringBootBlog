@@ -10,6 +10,7 @@ import com.blog.mapper.ArticleMapper;
 import com.blog.service.ArticleService;
 import com.blog.service.CategoryService;
 import com.blog.service.TagService;
+import com.blog.service.ThreadService;
 import com.blog.vo.ArticleBodyVo;
 import com.blog.vo.ArticleVo;
 import com.blog.vo.Result;
@@ -172,6 +173,8 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(archivesList);
     }
 
+    @Autowired
+    ThreadService threadService;
     //显示文章详细信息（内容加标签分类等全部）
     @Override
     public Result findArticleById(Long articleId) {
@@ -181,6 +184,9 @@ public class ArticleServiceImpl implements ArticleService {
 
         //将简单article 转化为 简单articleVo
         ArticleVo articleVo = copy(article,true,true,true,true);
+
+        //模拟更新操作
+        threadService.updateArticleViewCount(articleMapper,article);
 
         //将简单Vo进行返回
         return Result.success(articleVo);
