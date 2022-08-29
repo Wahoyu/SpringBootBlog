@@ -116,8 +116,8 @@ public class ArticleServiceImpl implements ArticleService {
 
         //如果需要body信息，要进行查询
         if (isBody){
-            Long bodyid = article.getId();
-            articleVo.setBody(findArticleByBodyId(bodyid));
+            Long bodyId = article.getBodyId();
+            articleVo.setBody(findArticleByBodyId(bodyId));
         }
 
         //如果需要category信息，要进行查询
@@ -240,7 +240,6 @@ public class ArticleServiceImpl implements ArticleService {
         articleBody.setContent(articleParam.getBody().getContent());
         articleBody.setContentHtml(articleParam.getBody().getContentHtml());
         articleBody.setArticleId(article.getId());
-        articleBody.setId(article.getId());
         articleBodyMapper.insert(articleBody);
         //将articleBody对象存储到article对象中
         article.setBodyId(articleBody.getId());
