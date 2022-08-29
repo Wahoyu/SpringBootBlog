@@ -13,9 +13,9 @@ public class ArticleVo {
     private String title;
     //主页文章简介
     private String summary;
-    private int commentCounts;
-    private int viewCounts;
-    private int weight;
+    private Integer commentCounts;
+    private Integer viewCounts;
+    private Integer weight;
     //创建时间
     private String createDate;
     private String author;

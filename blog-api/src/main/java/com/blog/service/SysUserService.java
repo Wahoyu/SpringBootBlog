@@ -2,6 +2,7 @@ package com.blog.service;
 
 import com.blog.entity.SysUser;
 import com.blog.vo.Result;
+import com.blog.vo.UserVo;
 
 public interface SysUserService {
 
@@ -19,4 +20,7 @@ public interface SysUserService {
 
     //注册时保存用户
     void save(SysUser sysUser);
+
+    //通过userid找到找到UserVo
+    UserVo findUserVoById(Long id);
 }

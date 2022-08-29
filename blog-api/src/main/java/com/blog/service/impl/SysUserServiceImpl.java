@@ -11,6 +11,9 @@ import com.blog.utils.JWTUtils;
 import com.blog.vo.ErrorCode;
 import com.blog.vo.LoginUserVo;
 import com.blog.vo.Result;
+import com.blog.vo.UserVo;
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -93,5 +96,20 @@ public class SysUserServiceImpl implements SysUserService {
         //在此处我们就不对用户id进行配置了（在SysUser的id上添加注解）-> @TableIdId(type = IdType.AUTO)
         //以后 用户多了之后 要进行分表操作 id就需要使用分布式id
         this.sysUserMapper.insert(sysUser);
+    }
+
+    //通过作者id找到UserVo
+    @Override
+    public UserVo findUserVoById(Long id) {
+        SysUser sysUser = sysUserMapper.selectById(id);
+        if(sysUser == null){
+            sysUser = new SysUser();
+            sysUser.setId(1L);
+            sysUser.setAvatar("/static/img/logo.b3a48c0.png");
+            sysUser.setNickname("Wahoyu");
+        }
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(sysUser,userVo);
+        return userVo;
     }
 }
