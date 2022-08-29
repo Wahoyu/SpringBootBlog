@@ -3,23 +3,30 @@ package com.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.dos.Archives;
+import com.blog.dos.ArticleTag;
 import com.blog.entity.Article;
 import com.blog.entity.ArticleBody;
+import com.blog.entity.SysUser;
 import com.blog.mapper.ArticleBodyMapper;
 import com.blog.mapper.ArticleMapper;
+import com.blog.mapper.ArticleTagMapper;
 import com.blog.service.ArticleService;
 import com.blog.service.CategoryService;
 import com.blog.service.TagService;
 import com.blog.service.ThreadService;
+import com.blog.utils.UserThreadLocal;
 import com.blog.vo.ArticleBodyVo;
 import com.blog.vo.ArticleVo;
 import com.blog.vo.Result;
+import com.blog.vo.TagVo;
+import com.blog.vo.params.ArticleParam;
 import com.blog.vo.params.PageParams;
 import com.sun.org.apache.xpath.internal.objects.XBoolean;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,6 +196,61 @@ public class ArticleServiceImpl implements ArticleService {
         threadService.updateArticleViewCount(articleMapper,article);
 
         //将简单Vo进行返回
+        return Result.success(articleVo);
+    }
+
+    //写文章
+    @Autowired
+    ArticleTagMapper articleTagMapper;
+
+    @Override
+    //添加事务注解
+    @Transactional
+    public Result publish(ArticleParam articleParam) {
+
+        //从内存中获取了用户
+        SysUser sysUser = UserThreadLocal.get();
+
+        //创建article对象，存储到article表
+        Article article = new Article();
+        article.setAuthorId(sysUser.getId());
+        article.setCategoryId(articleParam.getCategory().getId());
+        article.setCreateDate(System.currentTimeMillis());
+        article.setCommentCounts(0);
+        article.setSummary(articleParam.getSummary());
+        article.setTitle(articleParam.getTitle());
+        article.setViewCounts(0);
+        article.setWeight(Article.Article_Common);
+        article.setBodyId(-1L);
+        this.articleMapper.insert(article);
+
+        //从参数中获取tag,存储到article--tag表
+        List<TagVo> tags = articleParam.getTags();
+        if (tags != null) {
+            for (TagVo tag : tags) {
+                ArticleTag articleTag = new ArticleTag();
+                articleTag.setArticleId(article.getId());
+                articleTag.setTagId(tag.getId());
+                this.articleTagMapper.insert(articleTag);
+            }
+        }
+
+        //创建articleBody表，存储到ArticleBody表中，并可以存储到article对象中
+        ArticleBody articleBody = new ArticleBody();
+        articleBody.setContent(articleParam.getBody().getContent());
+        articleBody.setContentHtml(articleParam.getBody().getContentHtml());
+        articleBody.setArticleId(article.getId());
+        articleBody.setId(article.getId());
+        articleBodyMapper.insert(articleBody);
+        //将articleBody对象存储到article对象中
+        article.setBodyId(articleBody.getId());
+
+        //存储articleMapper
+        articleMapper.updateById(article);
+
+        //创建articleVo，设置Id，进行返回
+        ArticleVo articleVo = new ArticleVo();
+        articleVo.setId(article.getId());
         return Result.success(articleVo);
     }
 }

@@ -12,4 +12,7 @@ public interface TagService {
 
     //显示最热标签
     Result hots(int limit);
+
+    //显示所有的tags
+    Result findAll();
 }

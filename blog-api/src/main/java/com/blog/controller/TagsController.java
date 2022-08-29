@@ -20,4 +20,10 @@ public class TagsController {
         int limit = 6;
         return tagService.hots(limit);
     }
+
+    //写文章时 显示所有的tags
+    @GetMapping
+    public Result findAll(){
+        return tagService.findAll();
+    }
 }

@@ -1,5 +1,6 @@
 package com.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.blog.entity.Tag;
 import com.blog.mapper.TagMapper;
 import com.blog.service.TagService;
@@ -56,5 +57,12 @@ public class TagServiceImpl implements TagService {
         //将tagids转化成tags
         List<Tag> tagList = tagMapper.findTagsByIds(tagIds);
         return Result.success(tagList);
+    }
+
+    //直接查询所有的tags并进行转换输出
+    @Override
+    public Result findAll() {
+        List<Tag> tags = this.tagMapper.selectList(new LambdaQueryWrapper<>());
+        return Result.success(copyList(tags));
     }
 }
