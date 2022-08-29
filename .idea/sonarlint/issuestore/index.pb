@@ -35,8 +35,6 @@ i
 9blog-api/src/main/java/com/blog/service/LoginService.java,d\a\da2d7282a8240b8d7d3c417a03b65df3ccb45b9f
 n
 >blog-api/src/main/java/com/blog/controller/TestController.java,9\4\94870ed608562bc17d1575356d6e736b168953f4
-h
-8blog-api/src/main/java/com/blog/config/WebMvcConfig.java,a\4\a40061b14d76f37e1f3d3fbec895e16938ab85ad
 j
 :blog-api/src/main/java/com/blog/utils/UserThreadLocal.java,2\f\2f1bd62ea1a8ad403d0506f45fe9fe46d6f8d11c
 o

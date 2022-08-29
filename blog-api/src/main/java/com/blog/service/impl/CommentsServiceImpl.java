@@ -2,12 +2,15 @@ package com.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.blog.entity.Comment;
+import com.blog.entity.SysUser;
 import com.blog.mapper.CommentMapper;
 import com.blog.service.CommentsService;
 import com.blog.service.SysUserService;
+import com.blog.utils.UserThreadLocal;
 import com.blog.vo.CommentVo;
 import com.blog.vo.Result;
 import com.blog.vo.UserVo;
+import com.blog.vo.params.CommentParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +103,44 @@ public class CommentsServiceImpl implements CommentsService {
         queryWrapper.eq(Comment::getParentId,id);
         queryWrapper.eq(Comment::getLevel,2);
         return copyList(commentMapper.selectList(queryWrapper));
+    }
+
+    //写评论
+    @Override
+    public Result comment(CommentParam commentParam) {
+
+        //从ThreadLocal中获取用户
+        SysUser sysUser = UserThreadLocal.get();
+
+        //创建Comment对象，并想向其中填入数
+        Comment comment = new Comment();
+        comment.setArticleId(commentParam.getArticleId());
+        comment.setAuthorId(sysUser.getId());
+        comment.setContent(commentParam.getContent());
+        comment.setCreateDate(System.currentTimeMillis());
+
+        //从参数中获取父评论的数值
+        Long parent = commentParam.getParent();
+
+        //如果parent不等于1，那么它就是二级评论
+        if (parent == null || parent == 0) {
+            comment.setLevel(1);
+        }else{
+            comment.setLevel(2);
+        }
+
+        //如果有父评论，则设置该字段。如果没有父评论，则设置为0。
+        comment.setParentId(parent == null ? 0 : parent);
+
+        //从参数中获取到艾特用户的id。有则艾特，无则不艾特
+        Long toUserId = commentParam.getToUserId();
+        comment.setToUid(toUserId == null ? 0 : toUserId);
+
+        //利用MybatisPlus将对象进行插入
+        this.commentMapper.insert(comment);
+
+        //不做什么返回了
+        return Result.success(null);
     }
 }
 
