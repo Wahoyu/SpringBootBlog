@@ -1,5 +1,6 @@
 package com.blog.controller;
 
+import com.blog.common.cache.Cache;
 import com.blog.service.ArticleService;
 import com.blog.vo.Result;
 import com.blog.vo.params.ArticleParam;
@@ -24,6 +25,7 @@ public class ArticleController {
 
     //首页显示最热文章
     @PostMapping("hot")
+    @Cache(expire = 5 * 60 * 1000,name = "hot_article")
     public Result hotArticle(){
 
         int limit = 5;
