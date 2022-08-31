@@ -4,6 +4,7 @@ import com.blog.service.TagService;
 import com.blog.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +27,17 @@ public class TagsController {
     public Result findAll(){
         return tagService.findAll();
     }
+
+    //主页-显示标签页面
+    @GetMapping("detail")
+    public Result findAllDetail(){
+        return tagService.findAllDetail();
+    }
+
+    //展示某个标签的全部文章
+    @GetMapping("detail/{id}")
+    public Result findDetailById(@PathVariable("id") Long id){
+        return tagService.findDetailById(id);
+    }
+
 }

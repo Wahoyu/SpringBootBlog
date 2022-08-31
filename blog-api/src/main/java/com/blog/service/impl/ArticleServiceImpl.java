@@ -52,6 +52,26 @@ public class ArticleServiceImpl implements ArticleService {
         //创建查询用的Wrapper对象，并对wrapper对象进行限制
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Article::getCreateDate,Article::getWeight);
+
+        //展示某个分类下面的所有文章 --------查询文章的参数 加上分类id，判断不为空 加上分类条件
+        if (pageParams.getCategoryId() != null) {
+            queryWrapper.eq(Article::getCategoryId,pageParams.getCategoryId());
+        }
+
+        //展示某个标签下的全部文章
+        List<Long> articleIdList = new ArrayList<>();
+        if (pageParams.getTagId() != null){
+            LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId,pageParams.getTagId());
+            List<ArticleTag> articleTags = articleTagMapper.selectList(articleTagLambdaQueryWrapper);
+            for (ArticleTag articleTag : articleTags) {
+                articleIdList.add(articleTag.getArticleId());
+            }
+            if (articleIdList.size() > 0){
+                queryWrapper.in(Article::getId,articleIdList);
+            }
+        }
+
         //通过当前页数，页表大小，查询条件 -> 文章页
         Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
 

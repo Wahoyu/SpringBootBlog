@@ -15,4 +15,10 @@ public interface TagService {
 
     //显示所有的tags
     Result findAll();
+
+    //主页-展示标签页面
+    Result findAllDetail();
+
+    //展示某个标签下的所有文章
+    Result findDetailById(Long id);
 }

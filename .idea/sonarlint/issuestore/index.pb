@@ -5,8 +5,6 @@ E
 blog-api/blog-api.iml,3\a\3a234e3dcde93f5096ae5beecf8b9a606798226d
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
-i
-9blog-api/src/main/java/com/blog/vo/params/PageParams.java,6\7\67dc8f566204e907a6b0b7847f65b918d34ed8c4
 a
 1blog-api/src/main/java/com/blog/dos/Archives.java,7\0\70e7275d16736a60350e50c059a98387aff30a19
 \
@@ -43,8 +41,6 @@ l
 <blog-api/src/main/java/com/blog/config/ThreadPoolConfig.java,9\9\99e06b61585e3a473272acc36d3e9a79fda2e795
 e
 5blog-api/src/main/java/com/blog/vo/ArticleBodyVo.java,b\b\bbb61ca7951bf7eeb45c2187d8f3f9278a582994
-b
-2blog-api/src/main/java/com/blog/vo/CategoryVo.java,2\e\2e5230012e1dff720b33ed769a23ac4243c31a59
 c
 3blog-api/src/main/java/com/blog/entity/Article.java,5\0\504a7e44314a2f2627a1da73d74da614013bad68
 g
@@ -61,8 +57,6 @@ c
 3blog-api/src/main/java/com/blog/vo/LoginUserVo.java,c\3\c390b0fad71c824afc8cc00c2438b5329d7aff31
 ^
 .blog-api/src/main/java/com/blog/vo/Result.java,b\c\bcc4a743cc46c16b7196617a412965269f876659
-]
--blog-api/src/main/java/com/blog/vo/TagVo.java,c\8\c8c755a132af6f4dfd6f7e2500c299b39fe8e6fe
 ^
 .blog-api/src/main/java/com/blog/vo/UserVo.java,4\9\4993766fc947f9c5dd48fc1b78082eec7b391050
 i
@@ -85,18 +79,6 @@ u
 Eblog-api/src/main/java/com/blog/service/impl/CommentsServiceImpl.java,c\8\c885c7dd8fa2a1576462a6b2e31cb1f679d6a03d
 a
 1blog-api/src/main/java/com/blog/vo/CommentVo.java,7\a\7a66e68a7cfc851a97d7b3692422edc68a386f71
-u
-Eblog-api/src/main/java/com/blog/service/impl/CategoryServiceImpl.java,4\d\4d9f99431a42cd9aad0a784f714dc045eb3cf744
-p
-@blog-api/src/main/java/com/blog/service/impl/TagServiceImpl.java,5\f\5faf72741c53c4a989e763d94e083990102798fb
-l
-<blog-api/src/main/java/com/blog/service/CategoryService.java,9\c\9c6aa809ddf1226443125717b1af1d54f3a136da
-g
-7blog-api/src/main/java/com/blog/service/TagService.java,e\d\ed4bdd4851f8b1d5c75bf85fe7970154430e5ece
-n
->blog-api/src/main/java/com/blog/controller/TagsController.java,b\7\b724c764a0490c2e9c79990cc814b071405069b8
-r
-Bblog-api/src/main/java/com/blog/controller/CategoryController.java,5\b\5b2405f8d756e2eddca3156e8bd6dc9910ab4762
 h
 8blog-api/src/main/java/com/blog/config/WebMvcConfig.java,a\4\a40061b14d76f37e1f3d3fbec895e16938ab85ad
 a
@@ -105,8 +87,6 @@ c
 3blog-api/src/main/java/com/blog/dos/ArticleTag.java,e\b\ebe122d244c138601945f4418f70c5b09bcb625f
 q
 Ablog-api/src/main/java/com/blog/controller/ArticleController.java,e\5\e550a1a7de4b8c38e402474906f651848631d6e6
-k
-;blog-api/src/main/java/com/blog/service/ArticleService.java,d\1\d1546715369475f9dbde0be85ce444c6a9739456
 j
 :blog-api/src/main/java/com/blog/service/ThreadService.java,a\3\a3342475e383e54eeffd9af3c61c7938d576e8ac
 l
@@ -119,8 +99,6 @@ o
 ?blog-api/src/main/java/com/blog/vo/params/ArticleBodyParam.java,1\c\1c3b27b5189cc1eeefaa806d1cd7c0a86278b263
 m
 =blog-api/src/main/java/com/blog/config/MybatisPlusConfig.java,c\6\c64d58ce162af77ba025b8247fe4a1df919e384a
-t
-Dblog-api/src/main/java/com/blog/service/impl/ArticleServiceImpl.java,2\0\20ee20bda5f2e834e2ebe2cc7e107e157cd7d1c9
 m
 =blog-api/src/main/java/com/blog/common/aop/LogAnnotation.java,7\8\783cfec1fe4d6c20c68d8d16ee0d7ededb0d2b8b
 i
