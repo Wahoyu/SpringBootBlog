@@ -2,6 +2,7 @@ package com.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.blog.common.aop.LogAnnotation;
 import com.blog.dos.Archives;
 import com.blog.dos.ArticleTag;
 import com.blog.entity.Article;
@@ -182,7 +183,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     ThreadService threadService;
+
     //显示文章详细信息（内容加标签分类等全部）
+    @LogAnnotation(module = "文章",operation = "获取文章列表")
     @Override
     public Result findArticleById(Long articleId) {
 
@@ -202,7 +205,6 @@ public class ArticleServiceImpl implements ArticleService {
     //写文章
     @Autowired
     ArticleTagMapper articleTagMapper;
-
     @Override
     //添加事务注解
     @Transactional

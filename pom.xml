@@ -42,6 +42,13 @@
             </exclusions>
         </dependency>
 
+        <!--七牛云依赖-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.7.0, 7.7.99]</version>
+        </dependency>
+
         <!--JWT登陆实现技术-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
