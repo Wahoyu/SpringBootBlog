@@ -5,10 +5,53 @@
 <mapper namespace="com.blog.mapper.ArticleMapper">
 
 
-    <!--显示主页文章归档-->
+    <!--1、显示主页文章归档-->
     <select id="listArchives" resultType="com.blog.dos.Archives">
         select FROM_UNIXTIME(create_date/1000,'%Y') as year,FROM_UNIXTIME(create_date/1000,'%m') as month,count(*) as count
         from ms_article
         group by year,month
     </select>
+
+    <!--2、获取全部文章列表 或 某分类的文章列表 或 某标签的文章列表 或 归档文章列表-->
+        <!--2.1、数据库字段与实体类对应关系-->
+        <resultMap id="articleMap" type="com.blog.entity.Article">
+            <id column="id" property="id" />
+            <result column="author_id" property="authorId"/>
+            <result column="comment_counts" property="commentCounts"/>
+            <result column="create_date" property="createDate"/>
+            <result column="summary" property="summary"/>
+            <result column="title" property="title"/>
+            <result column="view_counts" property="viewCounts"/>
+            <result column="weight" property="weight"/>
+            <result column="body_id" property="bodyId"/>
+            <result column="category_id" property="categoryId"/>
+        </resultMap>
+
+        <!--2.2、拼接SQL语句-->
+        <select id="listArticle"  resultMap="articleMap">
+            select * from ms_article
+            <where>
+                1 = 1
+
+                <!--某分类下的文章列表-->
+                <if test="categoryId != null">
+                    and  category_id = #{categoryId}
+                </if>
+
+                <!--标签下的文章列表-->
+                <if test="tagId != null">
+                    and id in (select article_id from ms_article_tag where tag_id=#{tagId})
+                </if>
+
+                <!--通过自定义函数将年月进行分类-->
+                <if test="year != null and year.length>0 and month != null and month.length>0">
+                    and ( FROM_UNIXTIME(create_date/1000,'%Y') = #{year} and FROM_UNIXTIME(create_date/1000,'%m') = #{month} )
+                </if>
+
+                <!--先根据权重进行降序排列，再根据日期进行降序排列-->
+            </where>
+            order by weight desc , create_date desc
+        </select>
+
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.common.aop.LogAnnotation;
 import com.blog.dos.Archives;
@@ -41,46 +42,21 @@ public class ArticleServiceImpl implements ArticleService {
     TagService tagService;
     @Autowired
     SysUserServiceImpl sysUserService;
+    @Autowired
+    ThreadService threadService;
+    @Autowired
+    ArticleTagMapper articleTagMapper;
+    @Autowired
+    ArticleBodyMapper articleBodyMapper;
+    @Autowired
+    CategoryService categoryService;
 
-    //获取主页文章列表
+    //获取全部文章列表 或 某分类的文章列表 或 某标签的文章列表 或 归档文章列表
     @Override
     public Result listArticle(PageParams pageParams) {
-
-        //通过传入的页数和页表大小创建Page对象
-        Page<Article> page = new Page<>(pageParams.getPage(), pageParams.getPageSize());
-
-        //创建查询用的Wrapper对象，并对wrapper对象进行限制
-        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.orderByDesc(Article::getCreateDate,Article::getWeight);
-
-        //展示某个分类下面的所有文章 --------查询文章的参数 加上分类id，判断不为空 加上分类条件
-        if (pageParams.getCategoryId() != null) {
-            queryWrapper.eq(Article::getCategoryId,pageParams.getCategoryId());
-        }
-
-        //展示某个标签下的全部文章
-        List<Long> articleIdList = new ArrayList<>();
-        if (pageParams.getTagId() != null){
-            LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId,pageParams.getTagId());
-            List<ArticleTag> articleTags = articleTagMapper.selectList(articleTagLambdaQueryWrapper);
-            for (ArticleTag articleTag : articleTags) {
-                articleIdList.add(articleTag.getArticleId());
-            }
-            if (articleIdList.size() > 0){
-                queryWrapper.in(Article::getId,articleIdList);
-            }
-        }
-
-        //通过当前页数，页表大小，查询条件 -> 文章页
-        Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
-
-        //文章页 -> 原生文章列表 -> 精修后文章列表
-        List<Article> records = articlePage.getRecords();
-        List<ArticleVo> articleVoList = copyList(records,true,true);
-
-        //将精修的文章列表进行返回
-        return Result.success(articleVoList);
+        Page<Article> page = new Page<>(pageParams.getPage(),pageParams.getPageSize());
+        IPage<Article> articleIPage = this.articleMapper.listArticle(page,pageParams.getCategoryId(),pageParams.getTagId(),pageParams.getYear(),pageParams.getMonth());
+        return Result.success(copyList(articleIPage.getRecords(),true,true));
     }
 
     //调用copy函数，挨个元素，将 原生文章列表 -> 精修后的文章列表
@@ -115,8 +91,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     //这是针对文章详细内容的ArticleVo-copy方法，为文章列表的copy方法之重载版本
-    @Autowired
-    CategoryService categoryService;
     private ArticleVo copy (Article article , boolean isTag , boolean isAuthor,boolean isBody ,boolean isCategory){
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(article,articleVo);
@@ -151,8 +125,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     //查询文章详细信息（文章内容）
-    @Autowired
-    private ArticleBodyMapper articleBodyMapper;
     private ArticleBodyVo findArticleByBodyId(Long bodyId) {
         ArticleBody articleBody = articleBodyMapper.selectById(bodyId);
         ArticleBodyVo articleBodyVo = new ArticleBodyVo();
@@ -201,9 +173,6 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(archivesList);
     }
 
-    @Autowired
-    ThreadService threadService;
-
     //显示文章详细信息（内容加标签分类等全部）
     @LogAnnotation(module = "文章",operation = "获取文章列表")
     @Override
@@ -223,8 +192,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     //写文章
-    @Autowired
-    ArticleTagMapper articleTagMapper;
     @Override
     //添加事务注解
     @Transactional

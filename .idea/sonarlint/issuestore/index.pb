@@ -41,8 +41,6 @@ l
 <blog-api/src/main/java/com/blog/config/ThreadPoolConfig.java,9\9\99e06b61585e3a473272acc36d3e9a79fda2e795
 e
 5blog-api/src/main/java/com/blog/vo/ArticleBodyVo.java,b\b\bbb61ca7951bf7eeb45c2187d8f3f9278a582994
-c
-3blog-api/src/main/java/com/blog/entity/Article.java,5\0\504a7e44314a2f2627a1da73d74da614013bad68
 g
 7blog-api/src/main/java/com/blog/entity/ArticleBody.java,b\a\ba577b51cefc5e190f323389d48a8103d81d7f25
 d
@@ -85,8 +83,6 @@ a
 1blog-api/src/main/java/com/blog/vo/ArticleVo.java,c\4\c4adedf48f58c527b086538abad089e9ef39a120
 c
 3blog-api/src/main/java/com/blog/dos/ArticleTag.java,e\b\ebe122d244c138601945f4418f70c5b09bcb625f
-q
-Ablog-api/src/main/java/com/blog/controller/ArticleController.java,e\5\e550a1a7de4b8c38e402474906f651848631d6e6
 j
 :blog-api/src/main/java/com/blog/service/ThreadService.java,a\3\a3342475e383e54eeffd9af3c61c7938d576e8ac
 l
