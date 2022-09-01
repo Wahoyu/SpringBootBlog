@@ -1,0 +1,10 @@
+
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(‡ï›Ç8þë¸ë®0
+X	java:S125"<This block of commented-out lines of code should be removed.(¡©àÆ8ÀÕþë®0
+W
+java:S1854)":Remove this useless assignment to local variable "putRet".(«ÛÛá8ì¸ë®0
+H
+java:S1481)"+Remove this unused "putRet" local variable.(«ÛÛá8ƒì¸ë®0
+c
+java:S1128
+"ARemove this unused import 'org.apache.commons.lang3.StringUtils'.(Øœ¼ºúÿÿÿÿ8ÅÕþë®0

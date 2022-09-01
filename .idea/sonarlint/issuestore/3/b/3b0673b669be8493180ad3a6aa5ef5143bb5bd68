@@ -1,0 +1,10 @@
+
+o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(³ ÆÖ
+[
+java:S1128"@Remove this unused import 'org.apache.commons.codec.cli.Digest'.(íËûÿÿÿÿ
+U
+java:S1128"?Remove this unused import 'org.aspectj.weaver.patterns.IToken'.(ÌŞÎ
+b
+java:S1192<"GDefine a constant instead of duplicating this literal "TOKEN_" 4 times.(¯¬—¡øÿÿÿÿ
+z
+java:S1488Y"_Immediately return this expression instead of assigning it to the temporary variable "sysUser".(€ÖÓóûÿÿÿÿ

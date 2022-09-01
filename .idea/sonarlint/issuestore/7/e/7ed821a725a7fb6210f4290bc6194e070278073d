@@ -1,0 +1,12 @@
+
+L
+java:S3740&"/Provide the parametrized type for this generic.(ªÔÓ¥8Š°Ï”­0
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(îÚ¸à8×ŒÏ”­0
+W
+java:S1118":Add a private constructor to hide the implicit public one.(‚Šè©8ÜŒÏ”­0
+`
+java:S5659&"CThe JWT signature (JWS) should be verified before using this token.(ªÔÓ¥8°Ï”­0
+A
+java:S1168,"$Return an empty map instead of null.(¥¹ï8¢°Ï”­0
+z
+java:S1488"]Immediately return this expression instead of assigning it to the temporary variable "token".(ÆíÚğ8ùŒÏ”­0
